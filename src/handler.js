@@ -30,7 +30,7 @@ const registerHandler = async (request, h) => {
     iat: Math.floor(Date.now() / 1000)
   };
   const token = Jwt.token.generate(payload, 'some_shared_secret', {
-    ttlSec: 3600 * 24 * 30, // Expires in 1 month
+    ttlSec: 3600*24*30, // Expires in 1 month
   });
 
   const response = h.response({
@@ -69,7 +69,7 @@ const loginHandler = async (request, h) => {
       status: "error",
       errorMessage
     })
-    response.code(errorCode);
+    response.code(500);
     return response;
   });
   const payload = {
@@ -77,7 +77,7 @@ const loginHandler = async (request, h) => {
     iat: Math.floor(Date.now() / 1000)
   };
   const token = Jwt.token.generate(payload, 'some_shared_secret', {
-    ttlSec: 3600 * 24 * 30, // Expires in 1 month
+    ttlSec: 3600*24*30, // Expires in 1 month
   });
   const response = h.response({
     status: "success",
@@ -315,28 +315,12 @@ const homeHandler = async (request, h) => {
 
 const updateStatusBayi = async (request, h) => {
   const { 
-    namalengkapbayibaru, 
-    tanggallahirbayibaru, 
+    namalengkapbayibaru,  
     beratbadanbayibaru, 
     tinggibadanbayibaru, 
     lingkarlenganbayibaru,
   } = request.payload;
   const  uid  = await request.auth.artifacts.decoded.payload.uid;
-
-  // Hitung usia bayi berdasarkan tanggal lahir yang baru
-  const dateDifference = Date.now() - new Date(tanggallahirbayibaru).getTime();
-  
-  function calculateAge(diffMilliseconds) {
-    const millisecondsInYear = 365.25 * 24 * 60 * 60 * 1000; // Milliseconds in a year
-    const age = diffMilliseconds / millisecondsInYear; // Convert to years
-    return age;
-  }
-   
-  const babyAge = calculateAge(dateDifference);
-  const babyMonth = Math.floor((babyAge % 1) * 12);
-  const babyYear = Math.floor(babyAge);
-  const usiabayistringbaru = `${babyYear} Tahun, ${babyMonth} Bulan`;
-  const usiabayibaru = babyYear;
   
   try {
     // Referensi ke dokumen bayi
@@ -347,9 +331,7 @@ const updateStatusBayi = async (request, h) => {
     const dataBayi = data.data();
 
     const namalengkapbayi = namalengkapbayibaru ? namalengkapbayibaru:dataBayi.namalengkapbayi;
-    const tanggallahirbayi = tanggallahirbayibaru ? tanggallahirbayibaru:dataBayi.tanggallahirbayi;
-    const usiabayi = usiabayibaru ? usiabayibaru:dataBayi.usiabayi;
-    const usiabayistring = usiabayistringbaru ? usiabayistringbaru:dataBayi.usiabayistring;
+    const usiabayi = dataBayi.usiabayi;
     const tinggibadanbayi = tinggibadanbayibaru ? tinggibadanbayibaru:dataBayi.tinggibadanbayi;
     const beratbadanbayi = beratbadanbayibaru ? beratbadanbayibaru:dataBayi.beratbadanbayi; 
     const lingkarlenganbayi = lingkarlenganbayibaru ? lingkarlenganbayibaru:dataBayi.lingkarlenganbayibaru;
@@ -359,9 +341,6 @@ const updateStatusBayi = async (request, h) => {
     // Update data di Firestore
     await updateDoc(docRef, {
       namalengkapbayi: namalengkapbayi,
-      tanggallahirbayi: tanggallahirbayi,
-      usiabayi: usiabayi,
-      usiabayistring: usiabayistring,
       tinggibadanbayi: tinggibadanbayi,
       beratbadanbayi: beratbadanbayi,
       lingkarlenganbayi: lingkarlenganbayi
