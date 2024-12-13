@@ -1,8 +1,8 @@
 
 # Project Title
 
-A brief description of what this project does and who it's for
-
+This backend is built with the node.js Hapi framework by dividing its files into several parts with their respective tasks.
+Below are how to connect to the backend API with their requirement parameters
 
 ## API Reference
 
@@ -20,7 +20,7 @@ A brief description of what this project does and who it's for
 | `tanggallahir` | `string` | **Required**. yyyy-mm-dd |
 | `jeniskelamin` | `string` | **Required**.  |
 | `alamat` | `string` | **Required**.  |
-| `nomortelp` | `string` | **Required**. |
+| `nomortelp` | `integer` | **Required**. |
 
 #### Get item
 
@@ -31,7 +31,7 @@ A brief description of what this project does and who it's for
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
 | `userPhoto`      | `form-data` | **Required**. foto user |
-| `uid` | `string` | **Required**. uid diambil dari userCredential pakai getAuth() firebase |
+| `uid` | `string` | **Required**. Take UID from token |
 
 ```http
   POST /registerbayi
@@ -39,13 +39,13 @@ A brief description of what this project does and who it's for
 
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
-| `uid` | `string` | **Required**. uid diambil dari userCredential pakai getAuth() firebase |
-| `namalengkapbayi`      | `string` | **Required**. nama bayi |
+| `uid` | `string` | **Required**. Take UID from token |
+| `namalengkapbayi`      | `string` | **Required**. |
 | `tanggallahirbayi`      | `string` | **Required**. yyyy-mm-dd |
-| `jeniskelaminbayi`      | `string` | **Required**. jenis kelamin bayi |
-| `tinggibadanbayi`      | `string` | **Required**. tinggi badan bayi dalam centimeter |
-| `beratbadanbayi`      | `string` | **Required**. berat badan bayi dalam kilogram |
-| `lingkarlenganbayi`      | `string` | **Required**. lingkar lengan dalam centimeter |
+| `jeniskelaminbayi`      | `string` | **Required**. |
+| `tinggibadanbayi`      | `integer` | **Required**. in centimeter |
+| `beratbadanbayi`      | `integer` | **Required**. in kilogram |
+| `lingkarlenganbayi`      | `integer` | **Required**. in centimeter |
 
 ```http
   POST /home
@@ -53,7 +53,7 @@ A brief description of what this project does and who it's for
 
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
-| `uid` | `string` | **Required**. uid diambil dari userCredential pakai getAuth() firebase |
+| `uid` | `string` | **Required**. Take UID from token |
 
 ```http
   POST /updatestatusbayi
@@ -61,12 +61,12 @@ A brief description of what this project does and who it's for
 
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
-| `uid` | `string` | **Required**. uid diambil dari userCredential pakai getAuth() firebase |
+| `uid` | `string` | **Required**. Take UID from token |
 | `namalengkapbayibaru`      | `string` | **Required**. nama bayi fixed aja user jangan dikasih akses ganti |
 | `tanggallahirbayibaru`      | `string` | **Required**. yyyy-mm-dd |
-| `tinggibadanbayibaru`      | `string` | **Required**. tinggi badan bayi yang baru dalam centimeter |
-| `beratbadanbayibaru`      | `string` | **Required**. berat badan bayi yang baru dalam kilogram |
-| `lingkarlenganbayibaru`      | `string` | **Required**. lingkar lengan yang baru dalam centimeter |
+| `tinggibadanbayibaru`      | `integer` | **Required**. in centimeter |
+| `beratbadanbayibaru`      | `integer` | **Required**. in kilogram |
+| `lingkarlenganbayibaru`      | `integer` | **Required**. in centimeter |
 
 
 ```http
@@ -83,7 +83,7 @@ A brief description of what this project does and who it's for
 
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
-| `judulSlug` | `string` | **Required**. diambil dari return article di page article|
+| `judulSlug` | `string` | **Required**. |
 
 ```http
   POST /profile/{uid}
@@ -91,7 +91,7 @@ A brief description of what this project does and who it's for
 
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
-| `uid` | `string` | **Required**. uid diambil dari userCredential pakai getAuth() firebase |
+| `uid` | `string` | **Required**.  |
 
 ```http
   POST /chatbot
@@ -99,4 +99,4 @@ A brief description of what this project does and who it's for
 
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
-| `message` | `string` | **Required**. pesan dari pengguna yang ingin disampaikan ke chatbot |
+| `message` | `string` | **Required**.  |
